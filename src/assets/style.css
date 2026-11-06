@@ -135,6 +135,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .
 .footer-inner { max-width: 64rem; margin: 0 auto; padding: 1.75rem 16px 2.25rem; }
 .footer-brand { font-family: var(--serif); font-size: 1rem; letter-spacing: .14em; color: var(--ink); margin: 0 0 .5rem; }
 .site-footer p { margin: .35rem 0; }
+.site-footer .footer-copy { margin-top: .9rem; color: var(--ink-3, var(--ink-2)); letter-spacing: .04em; }
+.footer-copy small { font-size: inherit; }
 
 /* ---------- Home ---------- */
 .hero { text-align: center; padding: 2.5rem 0 2.5rem; }
@@ -170,7 +172,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .
 }
 .bookshelf li { flex: 0 0 auto; }
 .spine {
-  display: flex; align-items: flex-start; justify-content: center;
+  /* vertical-rl では交差軸が左右（右始まり）なので、align-items が左右の位置を決める */
+  display: flex; align-items: center; justify-content: center;
   width: 2.7rem; height: 11.5rem; padding: .9rem 0 .5rem;
   writing-mode: vertical-rl; text-decoration: none; color: #f3ead2;
   font-family: var(--serif); font-size: .95rem; letter-spacing: .14em; font-weight: 600;

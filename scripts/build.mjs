@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import matter from 'gray-matter';
+import { parseFrontMatter } from './lib/frontmatter.mjs';
 import { renderBody, splitSupplementary, escapeHtml as e } from './lib/render.mjs';
 import { layout, lawPage, KIND_LABEL, SITE_NAME, SITE_TAGLINE } from './lib/templates.mjs';
 
@@ -83,7 +83,7 @@ function main() {
     if (!fs.existsSync(d)) continue;
     for (const file of walk(d)) {
       const raw = fs.readFileSync(file, 'utf8');
-      const { data, content } = matter(raw);
+      const { data, content } = parseFrontMatter(raw);
       const id = String(data.law_id || path.basename(file, '.md'));
       laws.push({
         id, kind, file,
@@ -213,7 +213,7 @@ function writeHome(laws, categories) {
   const body = `
 <section class="hero">
   <p class="hero-kicker">閲覧室へようこそ</p>
-  <h1 class="hero-title"><span class="nw">法令を、</span><span class="nw">条文から探す。</span></h1>
+  <h1 class="hero-title"><span class="nw">条文のことばから、</span><span class="nw">法令を探す。</span></h1>
   <p class="hero-lead">日本国憲法と ${nAct.toLocaleString()} の法律の全文、そして政令・府省令を含む ${laws.length.toLocaleString()} 件の法令名を収めた、静かな書庫です。</p>
   <form class="hero-search" action="search.html" role="search">
     <label class="visually-hidden" for="q">語句・法令名で検索</label>

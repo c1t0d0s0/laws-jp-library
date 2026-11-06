@@ -59,6 +59,7 @@ ${p.body}
     <p class="footer-brand">${SITE_NAME}</p>
     <p>法令データの出典：<a href="https://laws.e-gov.go.jp/" rel="noopener">e-Gov法令検索</a>（<a href="https://www.digital.go.jp/resources/open_data/public_data_license_v1.0" rel="noopener">公共データ利用規約 第1.0版</a>）。Markdown 変換：<a href="https://github.com/Kohei-Wada/houritsu" rel="noopener">houritsu</a>（CC BY 4.0）。</p>
     <p>本サイトの内容は参考情報です。正確な法令の内容は、必ずe-Gov法令検索や官報でご確認ください。</p>
+    <p class="footer-copy"><small>&copy; 2026 c1t0d0s0</small></p>
   </div>
 </footer>
 <script type="module" src="${root}assets/common.js"></script>
