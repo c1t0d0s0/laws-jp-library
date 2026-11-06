@@ -51,6 +51,9 @@ async function main() {
     }
     const w = await index.writeFiles({ outputPath: path.join(SITE, dir) });
     if (w.errors.length) throw new Error(w.errors.join('\n'));
+    if (!fs.existsSync(path.join(SITE, dir, 'pagefind-entry.json'))) {
+      throw new Error(`${dir}/pagefind-entry.json が作成されていません`);
+    }
     await index.deleteIndex();
     await pagefind.close(); // バックエンドを終了してメモリを解放
     bundles.push(dir);
@@ -61,4 +64,17 @@ async function main() {
   console.log(`索引 ${bundles.length} 個を作成しました（${((Date.now() - t0) / 1000).toFixed(0)}秒）`);
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+// pagefind のバックエンド（子プロセス）がメモリ不足などで落ちると、待っている Promise が
+// 解決されないままイベントループが空になり、何も出力せず終了コード 0 で終わってしまう。
+// main() が完了する前にプロセスが終わろうとしたら、失敗として扱う。
+let finished = false;
+process.on('beforeExit', () => {
+  if (finished) return;
+  console.error('索引の作成が途中で止まりました。pagefind のバックエンドが停止した可能性があります'
+    + '（メモリ不足の場合は SHARD_MB を小さくしてください。例: SHARD_MB=12 npm run build:index）。');
+  process.exit(1);
+});
+
+main()
+  .then(() => { finished = true; })
+  .catch(err => { console.error(err); process.exit(1); });
