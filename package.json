@@ -1,0 +1,19 @@
+{
+  "name": "laws-jp-library",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "日本の法令を全文検索できる静的サイト（GitHub Pages）",
+  "scripts": {
+    "build:html": "node scripts/build.mjs",
+    "build:index": "node scripts/index.mjs",
+    "build": "npm run build:html && npm run build:index",
+    "serve": "python3 -m http.server -d site 8080"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.3.3",
+    "pagefind": "^1.6.0"
+  }
+}
